@@ -1,0 +1,67 @@
+{
+    "actors": {
+        "bullet":{
+            "cardnality": 1,
+            "lifecycle": {
+                "born": ["onClickScreen"],
+                "rules": {
+                    "direction":0,
+                    "velocity": 50
+                },
+                "death": ["onOutsideView", "_onColideWithAlient"]
+            },
+            "asset": "_circle"
+        },
+        "alient": {
+            "cardnality": 1,
+            "lifecycle": {
+                "born": ["random"],
+                "rules": [{
+                    "direction": "TO_LEFT",
+                    "velocity": 0.01 
+                }],
+                "death": ["onOutsideView", "_onColideWithButtet"]
+            },
+            "asset": "_circle"
+        }
+    },
+    "rules": [{
+        "id":"_onColideWidthAlient",
+        "actor1": {"class": "*"},
+        "actor2": {"class": "*"},
+        "conditions": {
+            "operator": "AND",
+            "lhs": {
+                "operator": "EQUAL",
+                "lhs": "actor1.x",
+                "rhs": "actor2.x"
+            },
+            "rhs": {
+                "operator": "EQUAL",
+                "lhs": "actor1.y",
+                "rhs": "actor2.y"
+            }
+        }
+    }],
+    "assets": {
+        "background": {
+            "id": "_background",
+            "bgcolor": "0xffffff",
+            "windowsXsize": "2000",
+            "windowsYsize": "1000"
+        },
+        "triangular": {
+            "id": "_triangular",
+            "url": "images/move3.png"
+        },
+        "circle": {
+            "id": "_circle",
+            "url": "images/move4.png"
+
+        },
+        "effectstar": {
+            "id":"_effectstar",
+            "url":"images/star.png"
+        }
+    }
+}
