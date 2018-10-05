@@ -8,6 +8,14 @@ var velocityBullet;
 var velocityAlient;
 var directionOfBullet;
 var directionOfAlient;
+var bornHuman;
+var scoreNeededToWin;
+var alienTimer;
+var alienFrequency;
+var resetScore;
+var textFont;
+var textColor;
+
 async function loadAssets() {
     var thingsToLoad = ["images/gameScript.json"];
     await $.ajax({
@@ -23,18 +31,24 @@ async function loadAssets() {
                 windowsYsize = String(value.background.windowsYsize);
                 objAttack = String(value.triangular.url);
                 objDefend = String(value.circle.url);
-
-                // console.log(background)
+                textColor = String(value.text.color);
+                textFont = String(value.text.font);
             });
             $(data.actors).each(function (index, value) {
-                velocityBullet = String(value.bullet.lifecycle.rules.velocity);
-                velocityAlient = String(value.alient.lifecycle.rules.velocity);
+                velocityBullet = value.bullet.lifecycle.rules.velocity;
+                velocityAlient = value.alient.lifecycle.rules.velocity;
                 directionOfBullet = String(value.bullet.lifecycle.rules.direction);
                 directionOfAlient = String(value.alient.lifecycle.rules.direction);
-
+                bornHuman = String(value.bullet.lifecycle.born);
+                onColideWithAlient = String(value.bullet.lifecycle.death.onColideWithAlient);
+                alienTimer = value.alient.alienTimer;
+                alienFrequency = value.alient.alienFrequency;
+            });
+            $(data.rules).each(function (index, value) {
+                scoreNeededToWin = value.score.scoreNeededToWin;
+                resetScore = value.score.resetScore;
             });
         }
-
     });
     let data = {
         background: background,
@@ -45,7 +59,15 @@ async function loadAssets() {
         velocityBullet,
         velocityAlient,
         directionOfBullet,
-        directionOfAlient
+        directionOfAlient,
+        bornHuman,
+        onColideWithAlient,
+        scoreNeededToWin,
+        alienFrequency,
+        alienTimer,
+        resetScore,
+        textColor,
+        textFont
     }
     return data;
 }
